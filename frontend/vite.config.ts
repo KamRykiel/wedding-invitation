@@ -7,4 +7,9 @@ export default defineConfig({
   server: {
     port: 5174,
   },
+  // Build to repo root so Vercel serves /index.html correctly
+  build: {
+    outDir: '../dist',
+    emptyOutDir: true,
+  },
 })
