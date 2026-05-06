@@ -2,7 +2,7 @@
   <section class="finale" data-reveal="block" :style="bg">
     <div class="inner">
       <h2 class="t" data-reveal="line">Nous avons hâte de partager ce moment unique avec vous</h2>
-      <p class="sig" data-reveal="line">{{ event?.couple_name ?? 'Wilfried & Ornella' }}</p>
+      <p class="sig" data-reveal="line">{{ event?.couple_name ?? 'Wilfried & Ornela' }}</p>
     </div>
   </section>
 </template>

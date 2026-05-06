@@ -45,7 +45,7 @@
       <FinalSection :event="eventStore.event" :hero-image-url="heroImageUrl" />
     </main>
 
-    <SiteFooter :couple-name="eventStore.event?.couple_name ?? 'Wilfried & Ornella'" />
+    <SiteFooter :couple-name="eventStore.event?.couple_name ?? 'Wilfried & Ornela'" />
 
     <ToastHost :toast="toast" />
   </div>

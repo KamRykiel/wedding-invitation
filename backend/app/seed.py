@@ -13,7 +13,7 @@ def seed(db: Session) -> None:
     if not db.query(Event).first():
         db.add(
             Event(
-                couple_name="Wilfried & Ornella",
+                couple_name="Wilfried & Ornela",
                 date=datetime.fromisoformat("2026-06-06T15:00:00+01:00"),
                 location="Faya Hotel, Akwa — Douala, Cameroun",
                 description=(
