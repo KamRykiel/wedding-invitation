@@ -26,6 +26,18 @@
 
     <p class="hint" data-reveal="block">Touchez une photo pour l’ouvrir en plein écran</p>
 
+    <div class="cards" data-reveal="block" aria-label="Cartes éditoriales">
+      <article v-for="(c, i) in editorialCards" :key="i" class="card" :style="c.style" data-reveal="block">
+        <div class="cardGlow" aria-hidden="true"></div>
+        <div class="cardTop">
+          <span class="pill">{{ c.kicker }}</span>
+          <span class="dot" aria-hidden="true">♥</span>
+        </div>
+        <h3 class="cardTitle">{{ c.title }}</h3>
+        <p class="cardCopy">{{ c.copy }}</p>
+      </article>
+    </div>
+
     <dialog ref="dlg" class="lightbox" aria-label="Photo en grand format">
       <div class="inner" @click="onBackdrop">
         <button type="button" class="close" @click="close" aria-label="Fermer la photo">×</button>
@@ -50,6 +62,37 @@ const mosaic = computed(() => {
   const out: GalleryItemDto[] = []
   while (out.length < 5) out.push(imgs[out.length % imgs.length]!)
   return out
+})
+
+const editorialCards = computed(() => {
+  const imgs = props.items.filter((x) => x.image_url)
+  const img = (n: number) => imgs[n % Math.max(1, imgs.length)]?.image_url ?? '/uploads/tsaf001.png'
+  return [
+    {
+      kicker: 'Cérémonie',
+      title: 'Un “oui” qui rassemble',
+      copy: 'Un moment de famille, de promesse et de lumière — à vivre ensemble, doucement.',
+      style: {
+        '--bg': `url("${img(0)}")`,
+      },
+    },
+    {
+      kicker: 'Réception',
+      title: 'La douceur d’une fête',
+      copy: 'Rires, photos, musique — et ces instants suspendus qu’on n’oublie pas.',
+      style: {
+        '--bg': `url("${img(1)}")`,
+      },
+    },
+    {
+      kicker: 'Souvenirs',
+      title: 'Des images comme des promesses',
+      copy: 'Chaque regard devient un récit. Chaque sourire, une page de plus.',
+      style: {
+        '--bg': `url("${img(2)}")`,
+      },
+    },
+  ] as Array<{ kicker: string; title: string; copy: string; style: Record<string, string> }>
 })
 
 function open(url: string) {
@@ -201,6 +244,128 @@ function onBackdrop(e: MouseEvent) {
   color: var(--c-ink);
   background: rgba(255, 255, 255, 0.95);
   box-shadow: var(--shadow-soft);
+}
+
+.cards {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 760px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+.card {
+  position: relative;
+  border-radius: 1.15rem;
+  overflow: hidden;
+  border: 1px solid rgba(211, 187, 161, 0.35);
+  box-shadow: var(--shadow-soft);
+  background-image:
+    linear-gradient(180deg, rgba(20, 14, 13, 0.62) 0%, rgba(20, 14, 13, 0.22) 52%, rgba(255, 255, 255, 0.0) 78%, rgba(255, 255, 255, 0.92) 100%),
+    linear-gradient(120deg, rgba(175, 150, 128, 0.18), rgba(227, 209, 195, 0.12)),
+    var(--bg);
+  background-size: cover;
+  background-position: center;
+  padding: 1.1rem 1.05rem 1.15rem;
+  min-height: 190px;
+  display: grid;
+  align-content: end;
+  transition: transform 0.5s var(--ease-spring), box-shadow 0.5s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+
+.cardGlow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.16), transparent 55%);
+  transform: rotate(10deg);
+  pointer-events: none;
+  animation: glowDrift 10s ease-in-out infinite;
+}
+@keyframes glowDrift {
+  0%,
+  100% {
+    transform: rotate(10deg) translate3d(0, 0, 0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: rotate(10deg) translate3d(22px, -14px, 0);
+    opacity: 1;
+  }
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.dot {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
+}
+
+.cardTitle {
+  margin: 0.7rem 0 0.35rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 650;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 14px 60px rgba(0, 0, 0, 0.28);
+  font-size: 1.22rem;
+  line-height: 1.2;
+}
+.cardCopy {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 330;
+  text-shadow: 0 10px 50px rgba(0, 0, 0, 0.24);
+  font-size: 0.95rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardGlow,
+  .dot {
+    animation: none !important;
+  }
 }
 </style>
 

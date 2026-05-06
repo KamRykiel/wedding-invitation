@@ -13,9 +13,9 @@ def seed(db: Session) -> None:
     if not db.query(Event).first():
         db.add(
             Event(
-                couple_name="Wilfried & [Partner Name]",
+                couple_name="Wilfried & Ornella",
                 date=datetime.fromisoformat("2026-06-06T15:00:00+01:00"),
-                location="[Lieu]",
+                location="Faya Hotel, Akwa — Douala, Cameroun",
                 description=(
                     "C’est avec une immense joie et beaucoup d’amour que nous vous invitons "
                     "à célébrer notre union."

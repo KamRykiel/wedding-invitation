@@ -27,9 +27,9 @@ export const useEventStore = defineStore('event', {
         // Fallback so the UI (countdown) still works even if DB/API isn't ready yet.
         this.event = {
           id: 1,
-          couple_name: 'Wilfried & [Partner Name]',
+          couple_name: 'Wilfried & Ornella',
           date: '2026-06-06T15:00:00+01:00',
-          location: '[Lieu]',
+          location: 'Faya Hotel, Akwa — Douala, Cameroun',
           description: 'C’est avec une immense joie et beaucoup d’amour que nous vous invitons à célébrer notre union.',
         }
       } finally {

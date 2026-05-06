@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <BackgroundAurora />
+    <HeartField :density="34" />
     <TopNav :sections="sections" :couple-name="eventStore.event?.couple_name ?? '...'"/>
 
     <main class="wrap">
@@ -43,7 +44,7 @@
       <FinalSection :event="eventStore.event" :hero-image-url="heroImageUrl" />
     </main>
 
-    <SiteFooter :couple-name="eventStore.event?.couple_name ?? 'Wilfried & [Partner Name]'" />
+    <SiteFooter :couple-name="eventStore.event?.couple_name ?? 'Wilfried & Ornella'" />
 
     <ToastHost :toast="toast" />
   </div>
@@ -56,6 +57,7 @@ import CountdownTimer from './components/CountdownTimer.vue'
 import EventDetails from './components/EventDetails.vue'
 import FinalSection from './components/FinalSection.vue'
 import GalleryMasonry from './components/GalleryMasonry.vue'
+import HeartField from './components/HeartField.vue'
 import HeroSection from './components/HeroSection.vue'
 import IntroMessage from './components/IntroMessage.vue'
 import LoveStory from './components/LoveStory.vue'
