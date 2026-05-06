@@ -9,22 +9,34 @@
       <article class="card" data-reveal="block">
         <span class="badge">Date</span>
         <p class="big">{{ dateLabel }}</p>
-        <p class="small">Cérémonie &amp; réception</p>
+        <p class="small">Cérémonie &amp; réception — <strong>samedi</strong>, à partir de <strong>14h</strong></p>
       </article>
 
       <article class="card" data-reveal="block">
         <span class="badge">Lieu</span>
-        <p class="big">{{ event?.location ?? '[Lieu]' }}</p>
-        <p class="small">Accueil et indications à préciser</p>
+        <p class="big">{{ event?.location ?? 'Faya Hotel, Akwa — Douala, Cameroun' }}</p>
+        <p class="small">Un cadre lumineux pour vous accueillir et vous laisser vivre la journée au même rythme.</p>
       </article>
     </div>
 
-    <div class="map" data-reveal="block" aria-label="Emplacement carte">
+    <div class="map" data-reveal="block" aria-label="Carte du lieu">
       <div>
-        <h3 class="mapTitle">Carte</h3>
-        <p class="mapCopy">Intégrez ici un lien de localisation ou un plan. (L’API peut aussi exposer un champ “map_url”.)</p>
+        <h3 class="mapTitle">Faya Hotel — Akwa</h3>
+        <p class="mapCopy">
+          Pour arriver sereinement, ouvrir l’itinéraire et repérer l’entrée. (La carte ci-dessous sert de prévisualisation.)
+        </p>
       </div>
-      <a class="mapBtn" href="#" @click.prevent>Ajouter un lien</a>
+      <a class="mapBtn" :href="mapsUrl" target="_blank" rel="noopener noreferrer">Ouvrir Google Maps</a>
+    </div>
+
+    <div class="embedWrap" data-reveal="block">
+      <iframe
+        class="embed"
+        :src="embedUrl"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Carte — Faya Hotel Douala"
+      ></iframe>
     </div>
 
     <p v-if="loading" class="note" data-reveal="block">Chargement…</p>
@@ -33,9 +45,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { MAPS_EMBED_URL, MAPS_PLACE_URL } from '../config/constants'
 import type { EventDto } from '../stores/event'
 
 const props = defineProps<{ id: string; event: EventDto | null; loading: boolean }>()
+
+const mapsUrl = MAPS_PLACE_URL
+const embedUrl = MAPS_EMBED_URL
 
 const dateLabel = computed(() => {
   if (!props.event?.date) return '[Date]'
@@ -160,6 +176,22 @@ const dateLabel = computed(() => {
 }
 .mapBtn:hover {
   transform: translateY(-2px);
+}
+
+.embedWrap {
+  margin-top: 0.95rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(211, 187, 161, 0.35);
+  box-shadow: var(--shadow-soft);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.embed {
+  width: 100%;
+  height: min(52vh, 420px);
+  border: 0;
+  display: block;
 }
 .note {
   margin-top: 0.85rem;

@@ -2,10 +2,17 @@
   <section class="section" :id="id">
     <header class="head" data-reveal="block">
       <p class="kicker" data-reveal="line">Le programme</p>
-      <h2 class="title" data-reveal="line">La journée, <em>pas à pas</em></h2>
+      <h2 class="title" data-reveal="line">Le chemin, <em>pas à pas</em></h2>
     </header>
 
     <div class="list">
+      <div class="item" data-reveal="block">
+        <div class="time">Ven.</div>
+        <div>
+          <div class="itTitle" data-reveal="line">Mariage traditionnel &amp; dot</div>
+          <div class="itCopy" data-reveal="line">Nyalla Rail (maison familiale de la mariée) — famille, rites, bénédictions.</div>
+        </div>
+      </div>
       <div class="item" data-reveal="block">
         <div class="time">14h</div>
         <div>

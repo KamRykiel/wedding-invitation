@@ -43,6 +43,7 @@
       </form>
 
       <p v-if="error" class="err" role="alert">{{ error }}</p>
+      <p v-if="success" class="success" role="status" aria-live="polite">{{ RSVP_SUCCESS_MESSAGE }}</p>
     </div>
   </section>
 </template>
@@ -50,6 +51,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRsvpStore } from '../stores/rsvp'
+import { RSVP_SUCCESS_MESSAGE } from '../config/constants'
 
 defineProps<{ id: string; submitting: boolean; error: string | null }>()
 const emit = defineEmits<{ submitted: [name: string] }>()
@@ -60,6 +62,7 @@ const name = ref('')
 const attending = ref(true)
 const guestsCount = ref(1)
 const message = ref('')
+const success = ref(false)
 
 async function submit() {
   const n = name.value.trim()
@@ -71,6 +74,10 @@ async function submit() {
     message: message.value.trim() || null,
   })
   emit('submitted', res.name)
+  success.value = true
+  window.setTimeout(() => {
+    success.value = false
+  }, 3200)
 }
 
 function reset() {
@@ -205,6 +212,28 @@ select:focus {
   text-align: center;
   color: #7a2c2c;
   font-weight: 650;
+}
+
+.success {
+  margin-top: 0.95rem;
+  text-align: center;
+  font-weight: 800;
+  color: var(--c-ink);
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(211, 187, 161, 0.55);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-soft);
+  transform: translateY(8px);
+  opacity: 0;
+  animation: popIn 0.65s var(--ease-spring) forwards;
+}
+
+@keyframes popIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 </style>
 

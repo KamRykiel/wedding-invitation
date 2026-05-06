@@ -2,6 +2,7 @@
   <div class="app">
     <BackgroundAurora />
     <HeartField :density="34" />
+    <SparkleField />
     <TopNav :sections="sections" :couple-name="eventStore.event?.couple_name ?? '...'"/>
 
     <main class="wrap">
@@ -65,6 +66,7 @@ import ProgramTimeline from './components/ProgramTimeline.vue'
 import QuotesSection from './components/QuotesSection.vue'
 import RsvpForm from './components/RsvpForm.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import SparkleField from './components/SparkleField.vue'
 import ToastHost, { type ToastState } from './components/ToastHost.vue'
 import TopNav, { type NavSection } from './components/TopNav.vue'
 import { useReveal } from './composables/useReveal'
