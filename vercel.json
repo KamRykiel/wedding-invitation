@@ -8,13 +8,12 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "frontend/dist" }
+      "config": { "distDir": "dist" }
     }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/static/uploads/(.*)", "destination": "/uploads/$1" },
-    { "source": "/(.*)", "destination": "/frontend/$1" }
+    { "source": "/static/uploads/(.*)", "destination": "/uploads/$1" }
   ]
 }
 
