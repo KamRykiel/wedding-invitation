@@ -5,6 +5,8 @@ from fastapi.staticfiles import StaticFiles
 
 from app.controllers import event_router, gallery_router, messages_router, rsvp_router
 from app.core.config import settings
+from app.core.db import Base, SessionLocal, engine
+from app.seed import seed as seed_db
 
 
 def create_app() -> FastAPI:
@@ -23,6 +25,22 @@ def create_app() -> FastAPI:
     # Keep local uploads for Docker/local dev only when the directory exists.
     if os.path.isdir(settings.static_uploads_dir):
         app.mount("/static/uploads", StaticFiles(directory=settings.static_uploads_dir), name="uploads")
+
+    @app.on_event("startup")
+    def _startup():
+        # Vercel/Supabase: make first deploy work without manual migrations.
+        if not settings.auto_create_and_seed:
+            return
+        try:
+            Base.metadata.create_all(bind=engine)
+            db = SessionLocal()
+            try:
+                seed_db(db)
+            finally:
+                db.close()
+        except Exception:
+            # Don’t crash the whole app if DB isn’t configured yet.
+            pass
 
     api = APIRouter(prefix="/api")
 

@@ -23,6 +23,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 420px) {
+  :root {
+    font-size: 16px;
+  }
+  .wrap {
+    padding-left: 1.05rem;
+    padding-right: 1.05rem;
+    padding-bottom: 6.5rem;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }

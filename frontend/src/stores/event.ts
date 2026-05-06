@@ -24,6 +24,14 @@ export const useEventStore = defineStore('event', {
       } catch (e) {
         const err = e as ApiError
         this.error = err.message ?? 'Impossible de charger l’événement.'
+        // Fallback so the UI (countdown) still works even if DB/API isn't ready yet.
+        this.event = {
+          id: 1,
+          couple_name: 'Wilfried & [Partner Name]',
+          date: '2026-06-06T15:00:00+01:00',
+          location: '[Lieu]',
+          description: 'C’est avec une immense joie et beaucoup d’amour que nous vous invitons à célébrer notre union.',
+        }
       } finally {
         this.loading = false
       }

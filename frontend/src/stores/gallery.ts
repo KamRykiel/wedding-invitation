@@ -23,6 +23,12 @@ export const useGalleryStore = defineStore('gallery', {
       } catch (e) {
         const err = e as ApiError
         this.error = err.message ?? 'Impossible de charger la galerie.'
+        // Fallback to static assets so images show on first deploy.
+        this.items = [
+          { id: 1, image_url: '/uploads/tsaf001.png', category: 'hero', sort_order: 0 },
+          { id: 2, image_url: '/uploads/tsaf002.jpeg', category: 'story', sort_order: 1 },
+          { id: 3, image_url: '/uploads/tsaf003.jpeg', category: 'story', sort_order: 2 },
+        ]
       } finally {
         this.loading = false
       }
